@@ -1,0 +1,25 @@
+service: aws-expreriment-sqs-sns
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+
+functions:
+  usersSubmit:
+    handler: hanlder.usersSubmit
+    events:
+      - http:
+          path: users
+          method: post
+  usersInvite:
+    handler: handler.usersInvite
+    events:
+      - sqs:
+          batchSize: 2
+          arn:
+            Fn::GetAtt:
+              - SQSQueue
+              - Arn
+
+
+
