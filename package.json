@@ -4,7 +4,9 @@
   "description": "AWS experiments",
   "main": "handler.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "invoke-local:usersInvite": "sls invoke local --function usersSubmit --aws-profile epam_user --path mocks/usersInvite.json",
+    "deploy": "sls deploy --aws-profile epam_user"
   },
   "keywords": [
     "AWS",
