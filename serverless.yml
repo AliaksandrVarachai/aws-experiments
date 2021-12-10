@@ -7,6 +7,18 @@ provider:
   environment:
     SQS_URL:
       Ref: SQSQueue
+    SNS_ARN:
+      Ref: SNSTopic
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action: "sqs:*"
+      Resource:
+        - Fn::GetAtt: [ SQSQueue, Arn ]
+    - Effect: "Allow"
+      Action: "sns:*"
+      Resource:
+        Ref: SNSTopic
+
 
 resources:
   Resources:
@@ -14,6 +26,17 @@ resources:
       Type: AWS::SQS::Queue
       Properties:
         QueueName: aws-experiments-sqs-sns-queue
+    SNSTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: my-js-sqs-sns-topic  # will be created??
+    SNSSubscription:
+      Type: AWS::SNS::Subscription
+      Properties:
+        Endpoint: aliaksandr_varachai@epam.com
+        Protocol: email
+        TopicArn:
+          Ref: SNSTopic
 
 functions:
   usersSubmit:

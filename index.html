@@ -1,10 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <style>
+        .users-title {
+            text-align: center;
+            background: lightgrey;
+        }
+        .users-container {
+            box-sizing: border-box;
+            width: 600px;
+            margin: 50px auto;
+        }
+        .users-container label {
+            display: block;
+            margin: 10px 20px;
+        }
+        .form-footer {
+            padding: 10px 20px;
+            text-align: center;
+        }
+    </style>
+
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-    Hello!
+<div class="users-container">
+    <h2 class="users-title">Invite users</h2>
+    <form id="usersForm">
+        <label><input type="checkbox" name="users" value="jordan_changdler@gmail.com">Jordan Chandler</label>
+        <label><input type="checkbox" name="users" value="scarlett_chavez@gmail.com">Scarlett Chavez</label>
+        <label><input type="checkbox" name="users" value="alia_denton@gmail.com">Alia Denton</label>
+        <label><input type="checkbox" name="users" value="ace_connor@gmail.com">Ace Connor</label>
+        <label><input type="checkbox" name="users" value="ned_carney@gmail.com">Ned Carney</label>
+        <label><input type="checkbox" name="users" value="bjorn_bevan@gmail.com">Bjorn Bevan</label>
+        <label><input type="checkbox" name="users" value="drake_pennington@gmail.com">Drake Pennington</label>
+        <label><input type="checkbox" name="users" value="mea_barnard@gmail.com">Mea Barnard</label>
+        <label><input type="checkbox" name="users" value="elsie_mae_rubio@gmail.com">Elsie-Mae Rubio</label>
+        <div class="form-footer">
+            <input type="submit" value="Send invitations" class="form-submit">
+        </div>
+    </form>
+</div>
+<script>
+    const serviceEndpoint = 'https://kjdrmyh91m.execute-api.us-east-1.amazonaws.com/dev/users';
+    document.getElementById('usersForm').addEventListener('submit', (event) => {
+      event.preventDefault();
+      const formData = new FormData(event.target);
+      const body = JSON.stringify({
+        users: formData.getAll('users'),
+      });
+      console.log(body);
+      fetch(serviceEndpoint, {
+        method: 'POST',
+        mode: 'no-cors',
+        body,
+      })
+    })
+</script>
+
 </body>
 </html>
